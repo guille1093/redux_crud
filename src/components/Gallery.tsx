@@ -3,16 +3,18 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPosts } from "../store/posts/postsSlice";
 
+
+
 function Gallery() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(fetchPosts())
+        dispatch(fetchPosts() as any)
     }, [dispatch])
 
-    const posts = useSelector((state) => state.posts.posts)
-    const status = useSelector((state) => state.posts.status)
-    const error = useSelector((state) => state.posts.error)
+    const posts = useSelector((state: any) => state.posts.posts)
+    const status = useSelector((state: any) => state.posts.status)
+    const error = useSelector((state: any) => state.posts.error)
 
     if (status === 'loading') {
         return 'Cargando...'
