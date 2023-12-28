@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPosts } from "../store/posts/postsSlice";
 
-
+const url = 'https://gq-pfs.pockethost.io/api/files/posts'
 
 function Gallery() {
     const dispatch = useDispatch()
@@ -17,7 +17,11 @@ function Gallery() {
     const error = useSelector((state: any) => state.posts.error)
 
     if (status === 'loading') {
-        return 'Cargando...'
+        return (
+            <div className='flex justify-center h-screen items-center'>
+                <span className="loading loading-infinity loading-lg"></span>
+            </div>
+        )
     }
 
     if (error) {
@@ -29,13 +33,12 @@ function Gallery() {
             {posts.items.map((post) => (
                 <div key={post.id}>
                     <img
-                        src={`https://still-team.pockethost.io/api/files/posts/${post.id}/${post.img}?thumb=300x300`}
+                        src={`${url}/${post.id}/${post.img}?thumb=300x300`}
                         alt={`${post.caption}`}
                         className='w-full h-full rounded'
                     />
                 </div>
             ))}
-
         </div>
     )
 }
