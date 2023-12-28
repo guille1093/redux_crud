@@ -5,7 +5,7 @@ function NewPost() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
             </svg>
         </button><dialog id="newPost" className="modal">
-                <div className="modal-box">
+                <div className="modal-box border-base-content border-2">
                     <h3 className="font-bold text-lg">Nuevo post</h3>
                 </div>
 
