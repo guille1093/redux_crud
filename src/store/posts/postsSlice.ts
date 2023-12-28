@@ -4,14 +4,13 @@ const POST_URL = "https://gq-pfs.pockethost.io/api/collections/posts/records";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
     try {
-        const response = await new Promise((resolve) => {
-            setTimeout(async () => {
-                const result = await axios.get(POST_URL);
-                resolve(result);
-            }, 3000); // 3-second timeout
-        });
+        // Simulate network latency
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
+        const response = await axios.get(POST_URL);
         return response.data;
-    } catch (err) {
+    }
+    catch (err) {
         return err.message;
     }
 });
