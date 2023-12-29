@@ -3,17 +3,17 @@ import axios from "axios";
 const POST_URL = "https://gq-pfs.pockethost.io/api/collections/posts/records";
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-    try {
-        // Simulate network latency
-        await new Promise((resolve) => setTimeout(resolve, 3000));
-
-        const response = await axios.get(POST_URL);
-        return response.data;
-    }
-    catch (err) {
-        return err.message;
-    }
+    // Simulate network latency
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    const response = await axios.get(POST_URL);
+    return response.data;
 });
+
+export const addNewPost = createAsyncThunk("posts/addNewPost", async (initialPost) => {
+    const response = await axios.post(POST_URL, initialPost);
+    return response.data;
+}
+);
 
 export const postsSlice = createSlice({
     name: "posts",
@@ -22,26 +22,7 @@ export const postsSlice = createSlice({
         status: "loading",
         error: null,
     },
-    reducers: {
-        addPost: (state, action) => {
-            state.posts.push(action.payload);
-        },
-        updatePost: (state, action) => {
-            const { id, caption, img } = action.payload;
-            const existingPost = state.posts.find((post) => post.id === id);
-            if (existingPost) {
-                existingPost.caption = caption;
-                existingPost.img = img;
-            }
-        },
-        deletePost: (state, action) => {
-            const { id } = action.payload;
-            const existingPost = state.posts.find((post) => post.id === id);
-            if (existingPost) {
-                state.posts = state.posts.filter((post) => post.id !== id);
-            }
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(fetchPosts.pending, (state) => {
@@ -53,6 +34,15 @@ export const postsSlice = createSlice({
             })
             .addCase(fetchPosts.rejected, (state, action) => {
                 state.status = "failed";
+                state.error = action.error.message;
+            })
+            .addCase(addNewPost.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(addNewPost.fulfilled, (state, action) => {
+                state.posts = action.payload;
+            })
+            .addCase(addNewPost.rejected, (state, action) => {
                 state.error = action.error.message;
             });
     },
