@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addNewPost } from '../../store/posts/postsSlice';
-import type { Post } from '../../store/posts/postsSlice';
+
+
 
 function NewPost() {
-    const [selectedImage, setSelectedImage] = useState<string>('');
+    const [selectedImage, setSelectedImage] = useState('');
     const dispatch = useDispatch();
-    const [caption, setCaption] = useState<string>('');
-    const [photo, setPhoto] = useState<string>('');
-    const [img, setImg] = useState<File | null>(null);
+    const [caption, setCaption] = useState('');
+    const [photo, setPhoto] = useState('');
+    const [img, setImg] = useState(null);
 
-    const handleCaptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleCaptionChange = (event) => {
         setCaption(event.target.value);
     }
 
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleImageChange = (event) => {
         const file = event.target.files?.[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
-                setSelectedImage(reader.result as string);
+                setSelectedImage(reader.result);
             };
             reader.readAsDataURL(file);
             setPhoto(file.name);
@@ -32,7 +33,7 @@ function NewPost() {
 
     const savePost = () => {
         if (caption && photo) {
-            const post: Post = {
+            const post = {
                 caption: caption,
                 img: img
             }
@@ -40,13 +41,13 @@ function NewPost() {
             setCaption('');
             setPhoto('');
             setSelectedImage('');
-            (document.getElementById('newPost') as HTMLDialogElement).close();
+            document.getElementById('newPost').close();
         }
     }
 
     return (
         <>
-            <button className="btn btn-ghost btn-circle" onClick={() => (document.getElementById('newPost') as HTMLDialogElement).showModal()}>
+            <button className="btn btn-ghost btn-circle" onClick={() => document.getElementById('newPost').showModal()}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                 </svg>
@@ -68,7 +69,7 @@ function NewPost() {
                         <textarea id="caption" name="caption" required className="textarea textarea-bordered" value={caption} onChange={handleCaptionChange}></textarea>
                         <button className="btn mt-4 btn-primary w-full" onClick={savePost}>Publicar</button>
                     </form>
-                    <button className="btn mt-4 btn-outline w-full" onClick={() => (document.getElementById('newPost') as HTMLDialogElement).close()}>Cerrar</button>
+                    <button className="btn mt-4 btn-outline w-full" onClick={() => document.getElementById('newPost').close()}>Cerrar</button>
                 </div>
                 <form method="dialog" className="modal-backdrop">
                     <button>close</button>
