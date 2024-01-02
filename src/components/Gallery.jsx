@@ -54,7 +54,6 @@ function Gallery() {
                                 handleImageClick(post);
                             }
                         }}
-                        role="button"
                     />
                 </div>
             ))}
