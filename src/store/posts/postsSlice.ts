@@ -16,7 +16,6 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
 
 export const addNewPost = createAsyncThunk("posts/addNewPost", async (initialPost: { post: Post }) => {
     const newPost: Post = initialPost.post;
-    //newPost.img = null;
     const response = await axios.post(POST_URL, newPost, {
         headers: {
             "Content-Type": "multipart/form-data",
