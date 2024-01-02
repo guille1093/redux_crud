@@ -44,16 +44,17 @@ function Gallery() {
             {posts.items.map((post) => (
                 <div key={post.id}>
                     <img
+                        aria-label="Post"
                         src={`${url}/${post.id}/${post.img}?thumb=300x300`}
                         alt={`${post.caption}`}
                         className='w-full h-full rounded'
                         onClick={() => handleImageClick(post)}
                         onKeyDown={(event) => {
-                            // Enter or space key
                             if (event.key === 'Enter' || event.key === ' ') {
                                 handleImageClick(post);
                             }
                         }}
+                        role="button"
                     />
                 </div>
             ))}
