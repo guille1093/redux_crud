@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addNewPost } from '../../store/posts/postsSlice';
+import { addNewPost } from '../../../store/posts/postsSlice';
 
 
 
@@ -10,7 +10,6 @@ function NewPost() {
     const [caption, setCaption] = useState('');
     const [photo, setPhoto] = useState('');
     const [img, setImg] = useState(null);
-
     const handleCaptionChange = (event) => {
         setCaption(event.target.value);
     }
