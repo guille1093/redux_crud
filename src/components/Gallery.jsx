@@ -49,6 +49,13 @@ function Gallery() {
                         alt={`${post.caption}`}
                         className='w-full h-full rounded'
                         onClick={() => handleImageClick(post)}
+                        onKeyDown={(event) => {
+                            // Enter or space key
+                            if (event.key === 'Enter' || event.key === ' ') {
+                                handleImageClick(post);
+                            }
+                        }}
+                        tabIndex={0}
 
                     />
                 </div>
