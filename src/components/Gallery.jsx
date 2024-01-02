@@ -54,8 +54,6 @@ function Gallery() {
                                 handleImageClick(post);
                             }
                         }}
-                        tabIndex={0}
-
                     />
                 </div>
             ))}
