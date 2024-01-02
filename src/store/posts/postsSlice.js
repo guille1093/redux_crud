@@ -2,20 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 const POST_URL = "https://gq-pfs.pockethost.io/api/collections/posts/records";
 
-export type Post = {
-    img: File | null;
-    caption: string;
-};
+
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-    // Simulate network latency
-    await new Promise((resolve) => setTimeout(resolve, 3000));
-    const response = await axios.get(POST_URL);
-    return response.data;
+    const response = await axios.get(`${POST_URL}?sort=-created`);
+    return response.data.items;
 });
 
-export const addNewPost = createAsyncThunk("posts/addNewPost", async (initialPost: { post: Post }) => {
-    const newPost: Post = initialPost.post;
+export const addNewPost = createAsyncThunk("posts/addNewPost", async (initialPost) => {
+    const newPost = initialPost.post;
     const response = await axios.post(POST_URL, newPost, {
         headers: {
             "Content-Type": "multipart/form-data",
@@ -31,7 +26,11 @@ export const postsSlice = createSlice({
         status: "loading",
         error: null,
     },
-    reducers: {},
+    reducers: {
+        addNewPostToState: (state, action) => {
+            state.push({ ...action.payload });
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchPosts.pending, (state) => {
@@ -48,7 +47,8 @@ export const postsSlice = createSlice({
             .addCase(addNewPost.pending, (state) => {
                 state.status = "loading";
             })
-            .addCase(addNewPost.fulfilled, (state) => {
+            .addCase(addNewPost.fulfilled, (state, action) => {
+                state.posts.unshift(action.payload);
                 state.status = "succeeded";
             })
             .addCase(addNewPost.rejected, (state, action) => {
@@ -58,3 +58,4 @@ export const postsSlice = createSlice({
 });
 
 export default postsSlice.reducer;
+export const { addNewPostToState } = postsSlice.actions;

@@ -41,7 +41,7 @@ function Gallery() {
 
     return (
         <div className='grid gap-4 grid-cols-3  md:grid-cols-4 lg:grid-cols-8  p-4'>
-            {posts.items.map((post) => (
+            {posts.map((post) => (
                 <div key={post.id}>
                     <img
                         aria-label="Post"

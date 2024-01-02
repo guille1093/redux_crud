@@ -30,7 +30,8 @@ function NewPost() {
         }
     };
 
-    const savePost = () => {
+    const savePost = (event) => {
+        event.preventDefault();
         if (caption && photo) {
             const post = {
                 caption: caption,
@@ -40,6 +41,8 @@ function NewPost() {
             setCaption('');
             setPhoto('');
             setSelectedImage('');
+            setImg(null);
+            document.getElementById('photo').value = '';
             document.getElementById('newPost').close();
         }
     }
@@ -54,11 +57,11 @@ function NewPost() {
             <dialog id="newPost" className="modal">
                 <div className="modal-box border-base-content border-2">
                     <h3 className="font-bold text-lg">Nuevo post</h3>
-                    <form className="form-control">
+                    <form id="newPost" className="form-control">
                         <label className="label">
                             <span className="label-text">Imagen</span>
                         </label>
-                        <input aria-label="photo" type="file" id="photo" name="photo" required className="file-input w-full" onChange={handleImageChange} />
+                        <input accept="image/png, image/jpeg, image/jpg" aria-label="photo" type="file" id="photo" name="photo" required className="file-input w-full" onChange={handleImageChange} />
                         {selectedImage && (
                             <img src={selectedImage} alt="Vista previa de la imagen" className="w-full mt-2 rounded-xl" />
                         )}
