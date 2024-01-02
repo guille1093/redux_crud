@@ -58,14 +58,14 @@ function NewPost() {
                         <label className="label">
                             <span className="label-text">Imagen</span>
                         </label>
-                        <input type="file" id="photo" name="photo" required className="file-input w-full" onChange={handleImageChange} />
+                        <input aria-label="photo" type="file" id="photo" name="photo" required className="file-input w-full" onChange={handleImageChange} />
                         {selectedImage && (
                             <img src={selectedImage} alt="Vista previa de la imagen" className="w-full mt-2 rounded-xl" />
                         )}
                         <label className="label">
                             <span className="label-text">Descripción</span>
                         </label>
-                        <textarea id="caption" name="caption" required className="textarea textarea-bordered" value={caption} onChange={handleCaptionChange}></textarea>
+                        <textarea aria-label="caption" id="caption" name="caption" required className="textarea textarea-bordered" value={caption} onChange={handleCaptionChange}></textarea>
                         <button className="btn mt-4 btn-primary w-full" onClick={savePost}>Publicar</button>
                     </form>
                     <button className="btn mt-4 btn-outline w-full" onClick={() => document.getElementById('newPost').close()}>Cerrar</button>
