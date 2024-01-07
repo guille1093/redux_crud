@@ -15,13 +15,14 @@ function Gallery() {
 
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedPost, setSelectedPost] = useState(null);
+    const [imageLoaded, setImageLoaded] = useState(false);
+
+
 
     const handleImageClick = (post) => {
         setSelectedImage(`${url}/${post.id}/${post.img}?thumb=1000x1000`);
         setSelectedPost(post);
-        console.log("selectedPost: " + selectedPost)
         modalRef.current.showModal();
-
     };
 
     const closeModal = () => {
@@ -56,6 +57,11 @@ function Gallery() {
             {posts.map((post) => (
                 <div key={post.id}>
                     <img
+                        onLoad={() => setImageLoaded(true)}
+                        style={{
+                            opacity: imageLoaded ? 1 : 0,
+                            transition: "opacity 1s ease-in",
+                        }}
                         aria-label="Post"
                         src={`${url}/${post.id}/${post.img}?thumb=300x300`}
                         alt={`${post.caption}`}
@@ -71,7 +77,14 @@ function Gallery() {
             ))}
             <dialog ref={modalRef} id="modal" className="modal">
                 <div className="modal-box border-base-content border-2">
-                    {selectedImage && <img src={selectedImage} alt="Selected" className="rounded-xl" />}
+                    {selectedImage &&
+                        <img
+                            onLoad={() => console.log("imagen cargada")} // Establecer isLoading en false cuando la imagen ha cargado
+                            src={selectedImage}
+                            alt="Selected"
+                            className="rounded-xl"
+                        />
+                    }
                     <div className="flex items-center justify-between mb-2">
                         {selectedPost && (
                             <>
